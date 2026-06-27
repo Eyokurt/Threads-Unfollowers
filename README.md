@@ -27,7 +27,7 @@ Threads profilinizdeki takipçi (followers) ve takip edilen (following) verileri
 Bu projeyi bilgisayarınızda çalıştırmak için herhangi bir sunucuya veya kurulum aracına ihtiyacınız yoktur.
 1. Projeyi klonlayın:
    ```bash
-   git clone https://github.com/KULLANICI_ADINIZ/Threads-Unfollowers.git
+   git clone https://github.com/Eyokurt/T.git
    ```
 2. Klasörün içindeki `index.html` dosyasına çift tıklayarak tarayıcınızda açın. Hepsi bu kadar!
 
