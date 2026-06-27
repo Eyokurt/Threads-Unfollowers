@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Threads Geri Takip Analizi</title>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style type="text/tailwindcss">
+    @theme {
+      --color-threads-bg: #101010;
+      --color-threads-panel: #181818;
+      --color-threads-border: #333333;
+      --color-threads-hover: #222222;
+      --color-threads-text: #f3f5f7;
+      --color-threads-muted: #777777;
+    }
+  </style>
+</head>
+<body class="bg-threads-bg text-threads-text min-h-screen font-sans selection:bg-white selection:text-black antialiased">
+
+  <div class="max-w-2xl mx-auto px-4 py-12 flex flex-col gap-8">
+    
+    <!-- Header -->
+    <header class="text-center space-y-3">
+      <!-- Minimalist Threads-like Icon -->
+      <div class="flex justify-center mb-6">
+         <svg viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-threads-text">
+            <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96V92.1109C29.8378 65.2539 36.2689 44.9148 48.6952 31.7581C60.5815 19.1714 77.1948 12.7208 98.0503 12.7208C118.825 12.7208 135.392 19.1183 147.248 31.6231C157.067 41.9791 163.424 57.0371 166.195 76.5413L182.973 74.1578C179.627 50.8123 171.696 32.7486 159.508 19.8914C144.757 4.3168 123.957 -3.00001 98.0503 -3.00001C72.2479 -3.00001 51.5833 4.67389 36.8373 19.9622C21.4695 35.9189 13.0645 61.2723 12.6393 92.1009V96.0022C12.8718 125.688 19.3807 149.336 32.551 166.134C46.6806 184.151 68.6496 191.954 97.0422 192.052C121.849 191.884 139.385 186.079 153.64 171.838C170.824 154.671 172.584 133.561 166.529 119.539C162.296 109.742 154.27 101.996 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z" fill="currentColor"></path>
+         </svg>
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-threads-text">
+        Geri Takip Analizi
+      </h1>
+      <p class="text-threads-muted text-sm md:text-base">
+        Instagram veya Threads verilerinizi tarayıcınızda analiz ederek sizi geri takip etmeyenleri bulun.
+      </p>
+    </header>
+
+    <!-- Privacy Notice -->
+    <section class="threads-card p-6 rounded-3xl space-y-3" aria-labelledby="privacy-heading">
+      <div class="flex items-center gap-3 text-threads-text">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        <h2 id="privacy-heading" class="text-base font-semibold">Gizlilik Garantisi</h2>
+      </div>
+      <p class="text-sm text-threads-muted leading-relaxed">
+        Yüklediğiniz hiçbir dosya sunucularımıza veya internete <strong>gönderilmez</strong>. Tüm dosya okuma ve analiz işlemleri tamamen cihazınızda gerçekleşir. Verilerinize sizin dışınızda hiç kimse erişemez.
+      </p>
+    </section>
+
+    <!-- Instructions Notice -->
+    <section class="threads-card p-6 rounded-3xl space-y-4" aria-labelledby="instructions-heading">
+      <div class="flex items-center gap-3 text-threads-text">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 id="instructions-heading" class="text-base font-semibold">Verilerimi Nasıl Alırım?</h2>
+      </div>
+      <ol class="list-decimal list-inside text-sm text-threads-muted space-y-2 ml-1">
+        <li>Instagram veya Threads'te <strong>Ayarlar</strong> > <strong>Hesaplar Merkezi</strong>'ne gidin.</li>
+        <li><strong>Bilgilerin ve İzinlerin</strong> > <strong>Bilgilerini İndir</strong> seçeneğine dokunun.</li>
+        <li><strong>"Cihazına indir"</strong> > <strong>"Bazı bilgilerini"</strong> adımlarını izleyip sadece <strong>"Takipçiler ve takip edilenler"</strong> seçeneğini işaretleyin.</li>
+        <li>İndirme biçimini <strong>HTML</strong> veya <strong>JSON</strong> olarak seçip talep oluşturun (Sistemimiz ikisini de destekler).</li>
+      </ol>
+      <div class="mt-4 p-4 bg-threads-bg rounded-2xl border border-threads-border flex items-start gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-threads-muted shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="text-xs text-threads-muted leading-relaxed">
+          <strong>Not:</strong> İndirme talebinde bulunduktan sonra Meta'nın verilerinizi hazırlayıp e-posta adresinize link göndermesi <strong>15 dakikaya kadar sürebilir</strong>. Mail ulaştığında bağlantıya tıklayarak <code class="bg-threads-panel border border-threads-border px-1 rounded text-threads-text">.zip</code> dosyanızı indirebilirsiniz.
+        </p>
+      </div>
+    </section>
+
+    <!-- Agreement Form -->
+    <form id="agreement-form" class="threads-card p-6 rounded-3xl space-y-5">
+      <h3 class="font-medium text-threads-text text-sm">Devam etmek için şartları onaylayın:</h3>
+      
+      <div class="space-y-4">
+        <label class="flex items-start gap-4 cursor-pointer group">
+          <div class="relative flex items-center mt-0.5">
+            <input type="checkbox" id="check-privacy" class="peer sr-only">
+            <div class="w-5 h-5 rounded-md border border-threads-border bg-threads-bg peer-checked:bg-white peer-checked:border-white peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-threads-bg transition-colors flex items-center justify-center">
+              <svg class="w-3.5 h-3.5 text-black opacity-0 peer-checked:opacity-100 transition-opacity" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          </div>
+          <span class="text-sm text-threads-muted group-hover:text-threads-text transition-colors">
+            Verilerimin yalnızca kendi cihazımda işleneceğini ve sunucuya gönderilmeyeceğini anladım.
+          </span>
+        </label>
+
+        <label class="flex items-start gap-4 cursor-pointer group">
+          <div class="relative flex items-center mt-0.5">
+            <input type="checkbox" id="check-liability" class="peer sr-only">
+            <div class="w-5 h-5 rounded-md border border-threads-border bg-threads-bg peer-checked:bg-white peer-checked:border-white peer-focus-visible:ring-2 peer-focus-visible:ring-white peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-threads-bg transition-colors flex items-center justify-center">
+              <svg class="w-3.5 h-3.5 text-black opacity-0 peer-checked:opacity-100 transition-opacity" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          </div>
+          <span class="text-sm text-threads-muted group-hover:text-threads-text transition-colors">
+            Bu aracın resmi bir araç olmadığını ve sorumluluğun tamamen bana ait olduğunu kabul ediyorum.
+          </span>
+        </label>
+      </div>
+    </form>
+
+    <!-- Upload Section -->
+    <section id="upload-section" class="transition-opacity duration-300">
+      <div id="dropzone" class="threads-card p-10 rounded-3xl text-center space-y-4 border border-threads-border border-dashed hover:bg-threads-hover transition-colors focus-within:ring-2 focus-within:ring-white focus-within:ring-offset-2 focus-within:ring-offset-threads-bg relative">
+        <input type="file" id="file-upload" accept=".zip" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-3xl z-10" aria-label="Meta'dan indirdiğiniz ZIP dosyasını yükleyin">
+        <div class="space-y-4 pointer-events-none">
+          <div class="w-12 h-12 mx-auto bg-threads-border rounded-full flex items-center justify-center text-threads-text">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-semibold text-threads-text">ZIP Dosyanızı Yükleyin</h3>
+            <p class="text-sm text-threads-muted mt-1 max-w-xs mx-auto">
+              Meta'dan indirdiğiniz <code class="bg-threads-bg border border-threads-border px-1.5 py-0.5 rounded text-threads-text text-xs">.zip</code> dosyasını buraya sürükleyin veya tıklayarak seçin.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="upload-error" class="hidden mt-4 p-4 rounded-xl bg-red-950/30 border border-red-900 text-sm text-red-400 text-center" aria-live="polite"></div>
+    </section>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="hidden flex-col items-center justify-center py-12 space-y-4" aria-live="polite">
+      <div class="w-8 h-8 border-2 border-threads-border border-t-white rounded-full animate-spin" aria-hidden="true"></div>
+      <p id="loading-text" class="text-threads-muted text-sm font-medium">Analiz ediliyor…</p>
+    </div>
+
+    <!-- Results Section -->
+    <section id="results-section" class="hidden space-y-6">
+      
+      <!-- Statistics Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="threads-card p-4 rounded-2xl text-center">
+          <h4 class="text-xs text-threads-muted font-medium mb-1 uppercase tracking-wide">Geri Takip Etmeyen</h4>
+          <p id="stat-not-following-back" class="text-2xl font-bold text-threads-text">0</p>
+        </div>
+        <div class="threads-card p-4 rounded-2xl text-center">
+          <h4 class="text-xs text-threads-muted font-medium mb-1 uppercase tracking-wide">Hayranlar</h4>
+          <p id="stat-fans" class="text-2xl font-bold text-threads-text">0</p>
+        </div>
+        <div class="threads-card p-4 rounded-2xl text-center">
+          <h4 class="text-xs text-threads-muted font-medium mb-1 uppercase tracking-wide">Karşılıklı</h4>
+          <p id="stat-mutuals" class="text-2xl font-bold text-threads-text">0</p>
+        </div>
+      </div>
+
+      <!-- Result Tabs -->
+      <div class="threads-card rounded-3xl overflow-hidden flex flex-col">
+        <div class="flex border-b border-threads-border overflow-x-auto no-scrollbar" role="tablist" aria-label="Analiz Sonuçları">
+          <button id="tab-not-following-back" role="tab" aria-selected="true" aria-controls="panel-not-following-back" class="flex-1 py-4 px-4 text-sm font-semibold border-b-2 border-white text-threads-text bg-threads-bg/50 hover:bg-threads-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white whitespace-nowrap">
+            Geri Takip Etmeyenler
+          </button>
+          <button id="tab-fans" role="tab" aria-selected="false" aria-controls="panel-fans" class="flex-1 py-4 px-4 text-sm font-semibold border-b-2 border-transparent text-threads-muted hover:text-threads-text hover:bg-threads-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white whitespace-nowrap">
+            Hayranlar
+          </button>
+          <button id="tab-mutuals" role="tab" aria-selected="false" aria-controls="panel-mutuals" class="flex-1 py-4 px-4 text-sm font-semibold border-b-2 border-transparent text-threads-muted hover:text-threads-text hover:bg-threads-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white whitespace-nowrap">
+            Karşılıklı
+          </button>
+        </div>
+
+        <div class="p-4 border-b border-threads-border bg-threads-bg">
+           <label for="search-input" class="sr-only">Kullanıcı ara</label>
+           <input type="search" id="search-input" placeholder="Ara…" autocomplete="off" spellcheck="false" class="w-full bg-threads-panel border border-threads-border rounded-xl px-4 py-2.5 text-sm text-threads-text placeholder-threads-muted focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-shadow">
+        </div>
+
+        <!-- Panels -->
+        <div id="panel-not-following-back" role="tabpanel" aria-labelledby="tab-not-following-back" class="p-2 sm:p-4 max-h-[500px] overflow-y-auto no-scrollbar">
+          <ul id="list-not-following-back" class="space-y-1"></ul>
+        </div>
+        
+        <div id="panel-fans" role="tabpanel" aria-labelledby="tab-fans" class="hidden p-2 sm:p-4 max-h-[500px] overflow-y-auto no-scrollbar">
+          <ul id="list-fans" class="space-y-1"></ul>
+        </div>
+
+        <div id="panel-mutuals" role="tabpanel" aria-labelledby="tab-mutuals" class="hidden p-2 sm:p-4 max-h-[500px] overflow-y-auto no-scrollbar">
+          <ul id="list-mutuals" class="space-y-1"></ul>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Footer Support -->
+    <footer class="text-center pt-8 pb-4">
+      <p class="text-threads-muted text-sm mb-3">Bu aracı faydalı bulduysanız destek olabilirsiniz:</p>
+      <a href="https://www.threads.net/@eistlen_" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-black px-5 py-2.5 rounded-xl font-semibold hover:bg-gray-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-threads-bg focus-visible:ring-white">
+        <svg viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black">
+          <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96V92.1109C29.8378 65.2539 36.2689 44.9148 48.6952 31.7581C60.5815 19.1714 77.1948 12.7208 98.0503 12.7208C118.825 12.7208 135.392 19.1183 147.248 31.6231C157.067 41.9791 163.424 57.0371 166.195 76.5413L182.973 74.1578C179.627 50.8123 171.696 32.7486 159.508 19.8914C144.757 4.3168 123.957 -3.00001 98.0503 -3.00001C72.2479 -3.00001 51.5833 4.67389 36.8373 19.9622C21.4695 35.9189 13.0645 61.2723 12.6393 92.1009V96.0022C12.8718 125.688 19.3807 149.336 32.551 166.134C46.6806 184.151 68.6496 191.954 97.0422 192.052C121.849 191.884 139.385 186.079 153.64 171.838C170.824 154.671 172.584 133.561 166.529 119.539C162.296 109.742 154.27 101.996 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z" fill="currentColor"></path>
+        </svg>
+        @eistlen_ hesabını takip et
+      </a>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
